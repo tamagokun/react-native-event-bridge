@@ -50,17 +50,24 @@ typedef void (^MSREventBridgeEventReceiverCallback)(NSError * _Nullable error, i
  */
 @protocol MSREventBridgeEventReceiver <NSObject>
 
+/**
+ * Return an array of supported events.
+ */
+- (NSArray *)supportedEvents;
+
 @optional
 
 /**
- * Event received from React Native
+ * Handle event received from React Native. Return YES if the event will be handled, otherwise if the event will not
+ * be handled an assertion will happen in development.
  */
-- (void)onEventWithName:(NSString *)name info:(NSDictionary *)info;
+- (BOOL)onEventWithName:(NSString *)name info:(NSDictionary *)info;
 
 /**
- * Event received from React Native. The callback must be called.
+ * Event received from React Native. The callback must be called. Return YES if the event will be handled, otherwise if
+ * the event will not be handled an assertion will happen in development.
  */
-- (void)onEventWithName:(NSString *)name info:(NSDictionary *)info callback:(MSREventBridgeEventReceiverCallback)callback;
+- (BOOL)onEventWithName:(NSString *)name info:(NSDictionary *)info callback:(MSREventBridgeEventReceiverCallback)callback;
 
 @end
 
@@ -85,3 +92,4 @@ typedef void (^MSREventBridgeEventReceiverCallback)(NSError * _Nullable error, i
 @property (nonatomic, readonly) id<MSREventBridgeEventEmitter> viewControllerEventEmitter;
 
 @end
+
